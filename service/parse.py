@@ -42,7 +42,7 @@ def parse(input):
     #start with part of speech tagging
     doc = nlp(input)
 
-    response = "initial value"
+    response = "initial value aka no instruction found."
     
     for token in doc:
         if token.lemma_ == "play":
@@ -104,16 +104,16 @@ def play(doc):
     for chunk in chunks:
         arguments.append(str(chunk))
 
-    print("RESULT: playGerneSongArtist(" + ", ".join(arguments) + ")")
+    print(colored("RESULT: playGerneSongArtist(" + ", ".join(arguments) + ")", "green"))
     #print("RESULT: playGerneSongArtist(" + ",".join(chunks)+")")
     return "Ok. Here we go."
 
 def stop():
-    print("RESULT: stop()")
+    print(colored("RESULT: stop()", "green"))
     return "Ok. Here we go."
 
 def pause():
-    print(colored("RESULT: pause()", "green")
+    print(colored("RESULT: pause()", "green"))
     return "Ok. Here we go."
 
 def resume():
