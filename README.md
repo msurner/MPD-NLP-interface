@@ -5,4 +5,4 @@ To run a request type `./sendRequest.sh "Play David Bowie."`.
 
 ## Ideas
 _"Playing David Bowie would be terrible."_ seems to need a sentiment analysis like in <http://nlp.stanford.edu:8080/sentiment/rntnDemo.html>.
--> But _"Playing David Bowie, although this is a very bad day."_ would return negative result. In addition spaCy doesn't provide a pre-trained model.
+-> But _"Playing David Bowie, since this is a very bad day."_ would return negative result. In addition spaCy doesn't provide a pre-trained model.

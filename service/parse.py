@@ -28,6 +28,7 @@ determine gernes
 """
 import spacy
 from termcolor import colored
+import mpd_provider_module as mpm
 from flask import Flask
 app = Flask(__name__)
 
@@ -104,18 +105,23 @@ def play(doc):
     for chunk in chunks:
         arguments.append(str(chunk))
 
-    print(colored("RESULT: playGerneSongArtist(" + ", ".join(arguments) + ")", "green"))
-    #print("RESULT: playGerneSongArtist(" + ",".join(chunks)+")")
+    if len(arguments) == 1 and len(arguments[0].split(" ")) == 1 and mpm.isGerne(arguments[0].split(" ")[0]):
+        mpm.playGerne(arguments[0].split(" ")[0]);
+    elif len(arguments) == 1 and len(arguments[0].split(" ")) == 2 and arguments[0].split(" ")[1] == "music" and mpm.isGerne(arguments[0].split(" ")[0]):
+        mpm.playGerne(arguments[0].split(" ")[0]);
+    else:
+        mpm.playSongArtist(arguments)
+
     return "Ok. Here we go."
 
 def stop():
-    print(colored("RESULT: stop()", "green"))
+    mpm.stop()
     return "Ok. Here we go."
 
 def pause():
-    print(colored("RESULT: pause()", "green"))
+    mpm.pause()
     return "Ok. Here we go."
 
 def resume():
-    print(colored("RESULT: resume()", "green"))
+    mpm.resume()
     return "Ok. Here we go."

@@ -1,3 +1,4 @@
+:: Working ::
 Play.
 Stop.
 Pause.
@@ -9,4 +10,15 @@ Play not David Bowie, but Iron Maiden.
 Don't play David Bowie.
 Playing David Bowie would be nice.
 My grandmother wants me to play David Bowie.
+Don't stop.
+Don't pause.
+Resume.
+Don't resume.
+
+:: Not Working ::
 Playing David Bowie would be terrible.
+
+:: Future ::
+Play something. -> What
+Play a random song. -> same as a
+Play rock music.
