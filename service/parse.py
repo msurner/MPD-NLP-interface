@@ -20,6 +20,9 @@ Don't stop.
 Don't pause.
 Resume.
 Don't resume.
+Play rock.
+Play rock music.
+
 
 TODO:
 from not working for now
@@ -71,7 +74,7 @@ def parse(input):
                 # input is something like: Don't pause.
                 response = "Sure. Let's make some noise."
             break
-        elif token.lemma_ == "resume":
+        elif token.lemma_ == "resume" or token.lemma_ == "continue":
             print("RESUME instruction found")
             if is_negative(token) != True:
                 response = resume()
@@ -105,12 +108,7 @@ def play(doc):
     for chunk in chunks:
         arguments.append(str(chunk))
 
-    if len(arguments) == 1 and len(arguments[0].split(" ")) == 1 and mpm.isGerne(arguments[0].split(" ")[0]):
-        mpm.playGerne(arguments[0].split(" ")[0]);
-    elif len(arguments) == 1 and len(arguments[0].split(" ")) == 2 and arguments[0].split(" ")[1] == "music" and mpm.isGerne(arguments[0].split(" ")[0]):
-        mpm.playGerne(arguments[0].split(" ")[0]);
-    else:
-        mpm.playSongArtist(arguments)
+    mpm.playGerneSongArtist(arguments)
 
     return "Ok. Here we go."
 

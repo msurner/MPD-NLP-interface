@@ -14,9 +14,12 @@ Don't stop.
 Don't pause.
 Resume.
 Don't resume.
+Play rock music or electro house.
+Continue.
 
 :: Not Working ::
 Playing David Bowie would be terrible.
+play rock music or some electro house.
 
 :: Future ::
 Play something. -> What
