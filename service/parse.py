@@ -32,6 +32,7 @@ determine gernes
 import spacy
 from termcolor import colored
 import mpd_provider_module as mpm
+import verbalizer
 from flask import Flask
 app = Flask(__name__)
 
@@ -110,16 +111,16 @@ def play(doc):
 
     mpm.playGerneSongArtist(arguments)
 
-    return "Ok. Here we go."
+    return verbalizer.getOkText()
 
 def stop():
     mpm.stop()
-    return "Ok. Here we go."
+    return verbalizer.getOkText()
 
 def pause():
     mpm.pause()
-    return "Ok. Here we go."
+    return verbalizer.getOkText()
 
 def resume():
     mpm.resume()
-    return "Ok. Here we go."
+    return verbalizer.getOkText()
