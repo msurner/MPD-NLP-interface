@@ -16,12 +16,13 @@ Resume.
 Don't resume.
 Play rock music or electro house.
 Continue.
+Stop playing
 
 :: Not Working ::
 Playing David Bowie would be terrible.
 play rock music or some electro house.
+Play get the funk.
 
 :: Future ::
 Play something. -> What
 Play a random song. -> same as a
-Play rock music.
