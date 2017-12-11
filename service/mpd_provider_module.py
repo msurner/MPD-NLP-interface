@@ -2,7 +2,7 @@ from termcolor import colored
 
 color = "green"
 
-gernes = ["rock", "alternative", "electro house"]
+gernes = ["rock", "hard rock", "alternative", "electro house"]
 
 def playGerneSongArtist(arguments):
     # determine if this chunks are gernes, artists or songs
@@ -48,3 +48,9 @@ def resume():
 
 def playOrResume():
     print(colored("RESULT: playOrResume()", color))
+
+def playRandom():
+    print(colored("RESULT: playRandom()", color))
+
+def playNext():
+    print(colored("RESULT: playNext()", color))

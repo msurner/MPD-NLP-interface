@@ -54,7 +54,16 @@ def parse(input):
             print("PLAY instruction found")
             # check if there is a negation
             if is_negative(token) != True:
-                response = play(doc)
+                if token.nbor().lemma_ == "next":
+                    response = playNext()
+                elif token.nbor().lemma_ == "random":
+                    response = playRandom()
+                elif token.nbor().lemma_ == "a" and token.nbor().nbor().lemma == "random":
+                    response = playRandom()
+                elif token.nbor().lemma_ == "something":
+                    response = playRandom()
+                else:
+                    response = play(doc)
             else:
                 # input is something like: Don't play David Bowie.
                 response = "What else do you want to hear?"
@@ -83,8 +92,11 @@ def parse(input):
                 # input is something like: Don't resume.
                 response = "Sure. I'm ready."
             break
+        elif token.lemma_ == "next": #TODO: check lenght(doc) == 1
+            print("NEXT instruction found")
+            response = playNext()
+            break
 
-    #print("RESULT: " + "sth else input")
     return ">> " + response + "\n"
 
 def is_negative(token):
@@ -123,4 +135,12 @@ def pause():
 
 def resume():
     mpm.resume()
+    return verbalizer.getOkText()
+
+def playNext():
+    mpm.playNext()
+    return verbalizer.getOkText()
+
+def playRandom():
+    mpm.playRandom()
     return verbalizer.getOkText()
