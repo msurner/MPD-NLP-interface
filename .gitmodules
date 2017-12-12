@@ -1,0 +1,3 @@
+[submodule "speech_processing"]
+	path = service/speech_processing
+	url = https://github.com/bierschi/speech_processing

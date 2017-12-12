@@ -1,10 +1,13 @@
 from termcolor import colored
+from speech_processing.music_player.mpd_connection import ControlMPD 
 
 color = "green"
 
 gernes = ["rock", "hard rock", "alternative", "electro house"]
 songs = [ "heroes" ]
 artists = [ "david bowie", "five finger death punch"]
+
+mpdcontrol = ControlMPD("localhost")
 
 def playGerneSongArtist(arguments):
     # determine if this chunks are gernes, artists or songs
