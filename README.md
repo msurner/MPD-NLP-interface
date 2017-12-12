@@ -4,6 +4,8 @@ To run the webservice type: `./startServer.sh ../path/to/parse.py`.
 To run a request type `./sendRequest.sh "Play David Bowie."`.
 
 ## Getting started
+Install flask: `pip install flask`
+Install spacy: `pip install spacy`
 Download model: `python -m spacy download en_core_web_lg`
 
 ## Ideas
