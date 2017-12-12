@@ -3,20 +3,26 @@ from termcolor import colored
 color = "green"
 
 gernes = ["rock", "hard rock", "alternative", "electro house"]
+songs = [ "heroes" ]
+artists = [ "david bowie", "five finger death punch"]
 
 def playGerneSongArtist(arguments):
     # determine if this chunks are gernes, artists or songs
     # for gerne:
     # should be only chunks with one gerne or <GERNE> + music
-    is_gerne = True
+    # if there are some gerne chunks and a artist, rather play the artist.
+    # if something unknown and a known gerne/artist/song is given, ignore the unknown
+    # if there is something unknown like 'very very hard rock' recursiveley remove the first? word and parse each argument
+    gernes = []
     for chunk in arguments:
-        if isGerne(trimGerne(chunk)) == False:
-            is_gerne = False
-            break
-    if is_gerne:
-        print(colored("RESULT: playGerne(" + ", ".join([trimGerne(argument) for argument in arguments]) + ")", color))
+        gerne = trimGerne(chunk)
+        if isGerne(gerne) == True:
+            gernes.append(gerne)
+
+    if len(gernes) < len(arguments) and containsSongOrArtist(arguments):
+       print(colored("RESULT: playSongArtist(" + ", ".join(arguments) + ")", color))
     else:
-        print(colored("RESULT: playSongArtist(" + ", ".join(arguments) + ")", color))
+       playGernes(gernes)
 
 def isGerne(gerne):    
     if trimGerne(gerne).lower() in gernes:
@@ -30,12 +36,22 @@ def trimGerne(gerne):
         gerne = gerne[:len(gerne)-(len(music)+1)]
     return gerne
 
-def playGerne(gerne):
-    # determine if this chunks are gernes, artists or songs
+def playGernes(gernes):
     # for gerne:
     # should be only one chunk with one word or <GERNE> + music
-    print(colored("RESULT: playGerne(" + ", ".join(gerne) + ")", color))
+    print(colored("RESULT: playGernes(" + ", ".join(gernes) + ")", color))
 
+def containsSongOrArtist(arguments):
+    for argument in arguments:
+        if isArtist(argument) or isSong(argument):
+            return True
+    return False
+
+def isArtist(argument):
+    return argument.lower() in artists
+
+def isSong(argument):
+    return argument.lower() in songs
 
 def stop():
     print(colored("RESULT: stop()", color))

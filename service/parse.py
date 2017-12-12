@@ -26,7 +26,7 @@ Play rock music.
 
 TODO:
 from not working for now
-determine gernes
+Play very very hard rock.
 
 """
 import spacy
@@ -66,7 +66,7 @@ def parse(input):
                     response = play(doc)
             else:
                 # input is something like: Don't play David Bowie.
-                response = "What else do you want to hear?"
+                response = verbalizer.getDontPlayText()
             break
         elif token.lemma_ == "stop":
             print("STOP instruction found")
@@ -74,7 +74,7 @@ def parse(input):
                 response = stop()
             else:
                 # input is something like: Don't stop.
-                response = "Sure. Let's make some noise."
+                response = verbalizer.getDontStopPauseText()
             break
         elif token.lemma_ == "pause":
             print("PAUSE instruction found")
@@ -82,7 +82,7 @@ def parse(input):
                 response = pause()
             else:
                 # input is something like: Don't pause.
-                response = "Sure. Let's make some noise."
+                response = verbalizer.getDontStopPauseText()
             break
         elif token.lemma_ == "resume" or token.lemma_ == "continue":
             print("RESUME instruction found")
@@ -90,7 +90,7 @@ def parse(input):
                 response = resume()
             else:
                 # input is something like: Don't resume.
-                response = "Sure. I'm ready."
+                response = verbalizer.getDontResumeText()
             break
         elif token.lemma_ == "next": #TODO: check lenght(doc) == 1
             print("NEXT instruction found")
