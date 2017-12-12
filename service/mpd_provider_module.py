@@ -21,8 +21,10 @@ def playGerneSongArtist(arguments):
 
     if len(gernes) < len(arguments) and containsSongOrArtist(arguments):
        print(colored("RESULT: playSongArtist(" + ", ".join(arguments) + ")", color))
-    else:
+    elif len(gernes) > 0:
        playGernes(gernes)
+    else:
+       playOrResume()
 
 def isGerne(gerne):    
     if trimGerne(gerne).lower() in gernes:
