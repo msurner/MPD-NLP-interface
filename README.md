@@ -3,6 +3,9 @@ This implements a natural language user interface for MPD (Music Player Deamon).
 To run the webservice type: `./startServer.sh ../path/to/parse.py`. 
 To run a request type `./sendRequest.sh "Play David Bowie."`.
 
+## Getting started
+Download model: `python -m spacy download en_core_web_lg`
+
 ## Ideas
 ### Sentiment analysis
 _"Playing David Bowie would be terrible."_ seems to need a sentiment analysis like in <http://nlp.stanford.edu:8080/sentiment/rntnDemo.html>.
