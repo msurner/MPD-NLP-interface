@@ -22,10 +22,13 @@ instructions = [
 "Stop playing."
 ]
 
+#define simulated behavior
 class UserBehavior(TaskSet):
 
     @task(5)
     def index(self):
+        # Make a HTTP-GET request, encode spaces (' ') with '%20'
+        # select instructions randomly
         self.client.get("/" + instructions[randint(0, len(instructions)-1)].replace(" ", "%20"))
 
 
