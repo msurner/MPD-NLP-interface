@@ -24,11 +24,34 @@ Play next.
 Next.
 Play rock music like Heroes from David Bowie.
 
+
+===================
+|| Conversations ||
+===================
+"Play Oompa Loompa music."
+>> Hmm.. I didn't get that. Should i play rock?
+"Yes"
+>> Ok. Here we go.
+------------------------------
+"Play Oompa Loompa music."
+>> Hmm.. I didn't get that. Should i play rock?
+"No"
+>> Oh, ok.
+------------------------------
+"Play something."
+>> Tell me an artist, song or gerne. Or do you want me to play a random song?
+"David Bowie"
+>> Ok. Have fun!
+------------------------------
+"Play something."
+>> Tell me an artist, song or gerne. Or do you want me to play a random song?
+"random song"
+>> Ok. Have fun!
+------------------------------
+
 :: Not Working ::
 Playing David Bowie would be terrible.
 play rock music or some electro house.
 Play get the funk.
 
 :: Future ::
-Play something. -> What
-Play a random song. -> same as a

@@ -1,5 +1,7 @@
 from termcolor import colored
-from speech_processing.music_player.mpd_connection import ControlMPD 
+from speech_processing.music_player.mpd_connection import ControlMPD
+from response import Response, ErrorCodeEnum
+from random import randint
 
 color = "green"
 
@@ -7,7 +9,8 @@ gernes = ["rock", "hard rock", "alternative", "electro house"]
 songs = [ "heroes" ]
 artists = [ "david bowie", "five finger death punch"]
 
-mpdcontrol = ControlMPD("localhost")
+# not working for now - ConnectionRefusedError: [Errno 111] Connection refused
+#mpdcontrol = ControlMPD("127.0.0.1")
 
 def playGerneSongArtist(arguments):
     # determine if this chunks are gernes, artists or songs
@@ -16,20 +19,28 @@ def playGerneSongArtist(arguments):
     # if there are some gerne chunks and a artist, rather play the artist.
     # if something unknown and a known gerne/artist/song is given, ignore the unknown
     # if there is something unknown like 'very very hard rock' recursiveley remove the first? word and parse each argument
-    gernes = []
+    response = Response()
+    arg_gernes = []
     for chunk in arguments:
         gerne = trimGerne(chunk)
         if isGerne(gerne) == True:
-            gernes.append(gerne)
+            arg_gernes.append(gerne)
 
-    if len(gernes) < len(arguments) and containsSongOrArtist(arguments):
-       print(colored("RESULT: playSongArtist(" + ", ".join(arguments) + ")", color))
-    elif len(gernes) > 0:
-       playGernes(gernes)
-    else:
+    if len(arguments) == 0:
        playOrResume()
+    elif len(arg_gernes) < len(arguments) and containsSongOrArtist(arguments):
+       print(colored("RESULT: playSongArtist(" + ", ".join(arguments) + ")", color))
+    elif len(arg_gernes) > 0:
+       playGernes(arg_gernes)
+    else:
+        # no gerne song artist found, check for alternate suggestions
+        response.errorCode = ErrorCodeEnum.ParsingError
+        # TODO: suggest a song / gerne / artist depending
+        response.suggestion = gernes[randint(0, len(gernes)-1)]
 
-def isGerne(gerne):    
+    return response
+
+def isGerne(gerne):
     if trimGerne(gerne).lower() in gernes:
         return True;
     return False;
