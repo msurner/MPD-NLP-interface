@@ -60,13 +60,11 @@ from enum import Enum
 from expiringdict import ExpiringDict
 from conversationState import ConversationStateEnum, ConversationState
 from response import Response, ErrorCodeEnum
-from flask import Flask
+from flask import Flask, request
 app = Flask(__name__)
 
 nlp = spacy.load("en_core_web_lg")
 
-# for developement there is only one user for now
-userid = 1
 
 # conversation state is stored in a expiringdict
 # note that there an additional state which is also the initial state which is considered if no state is stored
@@ -77,10 +75,15 @@ states = ExpiringDict(max_len=100, max_age_seconds=10)
 
 print("READY for requests")
 
-@app.route("/<input>")
-def parse(input):
-    print("REQUEST: " + input)
+@app.route("/")
+def parseREST():
+    input = request.args.get('input')
+    userid = request.args.get('userid')
+    print("REQUEST from id " + userid + ": " + input)
+    return parse(input, userid)
 
+
+def parse(input, userid):
     #start with part of speech tagging
     doc = nlp(input)
 
@@ -103,7 +106,7 @@ def parse(input):
                         states[userid] = ConversationState(ConversationStateEnum.AwaitSongArtistOrGerne)
                         return verbalizer.getQuestionForArtistSongGerneOrRandom()
                     else:
-                        response = play(doc)
+                        response = play(doc, userid)
                 else:
                     # input is something like: Don't play David Bowie.
                     response = verbalizer.getDontPlayText()
@@ -136,18 +139,18 @@ def parse(input):
                 print("NEXT instruction found")
                 response = playNext()
                 break
-                
+
     elif states.get(userid).state == ConversationStateEnum.AwaitYesOrNo:
         print("Yes or no")
         state = states.pop(userid) # remove state
         if doc[0].lemma_ == "yes":
-            return parse(state.suggestion) # simply call with a suggestion like 'Play rock.'
+            return parse(state.suggestion, userid) # simply call with a suggestion like 'Play rock.'
         else:
             return "Oh, ok."
     elif states.get(userid).state == ConversationStateEnum.AwaitSongArtistOrGerne:
         print("Song, Gerne or Artist")
         states.pop(userid) # remove state
-        return parse("Play " + str(doc))
+        return parse("Play " + str(doc), userid)
     return ">> " + response + "\n"
 
 def is_negative(token):
@@ -159,7 +162,7 @@ def is_negative(token):
             return True
     return False
 
-def play(doc):
+def play(doc, userid):
     chunks = list(doc.noun_chunks)
     # determine if this chunks are gernes, artists or songs
     # for gerne:

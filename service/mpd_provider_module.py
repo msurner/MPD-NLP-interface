@@ -19,7 +19,7 @@ def playGerneSongArtist(arguments):
     # if there are some gerne chunks and a artist, rather play the artist.
     # if something unknown and a known gerne/artist/song is given, ignore the unknown
     # if there is something unknown like 'very very hard rock' recursiveley remove the first? word and parse each argument
-    response = Response()
+    response = Response() # errorCode.Success and suggestion = None
     arg_gernes = []
     for chunk in arguments:
         gerne = trimGerne(chunk)
@@ -53,8 +53,6 @@ def trimGerne(gerne):
     return gerne
 
 def playGernes(gernes):
-    # for gerne:
-    # should be only one chunk with one word or <GERNE> + music
     print(colored("RESULT: playGernes(" + ", ".join(gernes) + ")", color))
 
 def containsSongOrArtist(arguments):
