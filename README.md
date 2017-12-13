@@ -67,22 +67,24 @@ Shut down.
 >> Hmm.. I didn't get that. Should i play rock?
 "Yes"
 >> Ok. Here we go.
-------------------------------
+```
+```
 "Play Oompa Loompa music."
 >> Hmm.. I didn't get that. Should i play rock?
 "No"
 >> Oh, ok.
-------------------------------
+```
+```
 "Play something."
 >> Tell me an artist, song or gerne. Or do you want me to play a random song?
 "David Bowie"
 >> Ok. Have fun!
-------------------------------
+```
+```
 "Play something."
 >> Tell me an artist, song or gerne. Or do you want me to play a random song?
 "random song"
 >> Ok. Have fun!
-------------------------------
 ```
 
 ## Ideas
