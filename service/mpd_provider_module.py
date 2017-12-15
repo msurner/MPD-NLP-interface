@@ -40,11 +40,6 @@ def playGerneSongArtist(arguments):
 
     return response
 
-def isGerne(gerne):
-    if trimGerne(gerne).lower() in gernes:
-        return True;
-    return False;
-
 def trimGerne(gerne):
     # cut ' music' in the end
     music = "music"
@@ -52,35 +47,51 @@ def trimGerne(gerne):
         gerne = gerne[:len(gerne)-(len(music)+1)]
     return gerne
 
-def playGernes(gernes):
-    print(colored("RESULT: playGernes(" + ", ".join(gernes) + ")", color))
-
 def containsSongOrArtist(arguments):
     for argument in arguments:
         if isArtist(argument) or isSong(argument):
             return True
     return False
 
+# TODO: @bierschi: Move to MPD-Command
+def isGerne(gerne):
+    if trimGerne(gerne).lower() in gernes:
+        return True;
+    return False;
+
+# TODO: @bierschi: Move to MPD-Command
+# gernes is a list of gernes f. e. ['rock', 'electro house'] or ['rock']
+def playGernes(gernes):
+    print(colored("RESULT: playGernes(" + ", ".join(gernes) + ")", color))
+
+# TODO: @bierschi: Move to MPD-Command
 def isArtist(argument):
     return argument.lower() in artists
 
+# TODO: @bierschi: Move to MPD-Command
 def isSong(argument):
     return argument.lower() in songs
 
+# TODO: @bierschi: Move to MPD-Command
 def stop():
     print(colored("RESULT: stop()", color))
 
+# TODO: @bierschi: Move to MPD-Command
 def pause():
     print(colored("RESULT: pause()", color))
 
+# TODO: @bierschi: Move to MPD-Command
 def resume():
     print(colored("RESULT: resume()", color))
 
+# TODO: @bierschi: Move to MPD-Command
 def playOrResume():
     print(colored("RESULT: playOrResume()", color))
 
+# TODO: @bierschi: Move to MPD-Command
 def playRandom():
     print(colored("RESULT: playRandom()", color))
 
+# TODO: @bierschi: Move to MPD-Command
 def playNext():
     print(colored("RESULT: playNext()", color))
