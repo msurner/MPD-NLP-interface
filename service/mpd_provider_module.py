@@ -12,7 +12,7 @@ artists = [ "david bowie", "five finger death punch"]
 # not working for now - ConnectionRefusedError: [Errno 111] Connection refused
 #mpdcontrol = ControlMPD("127.0.0.1")
 
-def playGerneSongArtist(arguments):
+def OBSOLETEplayGerneSongArtist(arguments):
     # determine if this chunks are gernes, artists or songs
     # for gerne:
     # should be only chunks with one gerne or <GERNE> + music
@@ -41,6 +41,7 @@ def playGerneSongArtist(arguments):
     return response
 
 def trimGerne(gerne):
+    print("trimgerne " + gerne)
     # cut ' music' in the end
     music = "music"
     if gerne.lower().endswith(music):
@@ -52,6 +53,9 @@ def containsSongOrArtist(arguments):
         if isArtist(argument) or isSong(argument):
             return True
     return False
+
+def playSongOrArtist(arguments):
+    print(colored("RESULT: playSongOrArtist(" + ", ".join(arguments) + ")", color))
 
 # TODO: @bierschi: Move to MPD-Command
 def isGerne(gerne):

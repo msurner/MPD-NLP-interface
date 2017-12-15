@@ -10,11 +10,21 @@ To run a request type
 ```
 
 ## Getting started
+Download with
+```
+git clone --recursive
+```
+or fetch the submodule afterwards with:
+```
+git submodule update --recursive --init
+```
+
 Install dependencies:
 ```
 pip3 install flask
 pip3 install expiringdict
 pip3 install spacy
+pip3 install python-mpd2
 ```
 Download model:
 ```
