@@ -23,7 +23,8 @@ python -m spacy download en_core_web_lg
 
 ## Supported instructions
 ### Working
-`Play.
+```
+Play.
 Stop.
 Pause.
 Play David Bowie.
@@ -46,13 +47,15 @@ Play random song.
 Play something.
 Play next.
 Next.
-Play rock music like Heroes from David Bowie.`
+Play rock music like Heroes from David Bowie.
+```
 
 ### Not working
 ```
 Playing David Bowie would be terrible.
 Play rock music or some electro house.
 Play get the funk.
+Play the next song.
 ```
 
 
