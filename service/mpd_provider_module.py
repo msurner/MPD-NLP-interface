@@ -12,34 +12,6 @@ artists = [ "david bowie", "five finger death punch"]
 # not working for now - ConnectionRefusedError: [Errno 111] Connection refused
 #mpdcontrol = ControlMPD("127.0.0.1")
 
-def OBSOLETEplayGerneSongArtist(arguments):
-    # determine if this chunks are gernes, artists or songs
-    # for gerne:
-    # should be only chunks with one gerne or <GERNE> + music
-    # if there are some gerne chunks and a artist, rather play the artist.
-    # if something unknown and a known gerne/artist/song is given, ignore the unknown
-    # if there is something unknown like 'very very hard rock' recursiveley remove the first? word and parse each argument
-    response = Response() # errorCode.Success and suggestion = None
-    arg_gernes = []
-    for chunk in arguments:
-        gerne = trimGerne(chunk)
-        if isGerne(gerne) == True:
-            arg_gernes.append(gerne)
-
-    if len(arguments) == 0:
-       playOrResume()
-    elif len(arg_gernes) < len(arguments) and containsSongOrArtist(arguments):
-       print(colored("RESULT: playSongArtist(" + ", ".join(arguments) + ")", color))
-    elif len(arg_gernes) > 0:
-       playGernes(arg_gernes)
-    else:
-        # no gerne song artist found, check for alternate suggestions
-        response.errorCode = ErrorCodeEnum.ParsingError
-        # TODO: suggest a song / gerne / artist depending
-        response.suggestion = gernes[randint(0, len(gernes)-1)]
-
-    return response
-
 def trimGerne(gerne):
     print("trimgerne " + gerne)
     # cut ' music' in the end
@@ -99,3 +71,10 @@ def playRandom():
 # TODO: @bierschi: Move to MPD-Command
 def playNext():
     print(colored("RESULT: playNext()", color))
+
+def speak(message):
+    ## BING_KEY not known
+    # tts = TextToSpeech(bing_key=BING_KEY, language='united_states', gender='Female')
+    # resp = tts.request_to_bing(text=message)
+    # tts.play_request(resp)
+    print(colored("SPOKEN_Output: '" + message + "'", "red"))

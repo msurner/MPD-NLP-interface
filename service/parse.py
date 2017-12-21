@@ -112,6 +112,7 @@ def parse(input, userid):
                     else:
                         # input is something like: Don't play David Bowie.
                         response = verbalizer.getDontPlayText()
+                        mpm.speak(response)
                     break
                 elif token.lemma_ == "stop":
                     print("STOP instruction found")
@@ -120,6 +121,7 @@ def parse(input, userid):
                     else:
                         # input is something like: Don't stop.
                         response = verbalizer.getDontStopPauseText()
+                        mpm.speak(response)
                     break
                 elif token.lemma_ == "pause":
                     print("PAUSE instruction found")
@@ -128,6 +130,7 @@ def parse(input, userid):
                     else:
                         # input is something like: Don't pause.
                         response = verbalizer.getDontStopPauseText()
+                        mpm.speak(response)
                     break
                 elif token.lemma_ == "resume" or token.lemma_ == "continue":
                     print("RESUME instruction found")
@@ -136,6 +139,7 @@ def parse(input, userid):
                     else:
                         # input is something like: Don't resume.
                         response = verbalizer.getDontResumeText()
+                        mpm.speak(response)
                     break
                 elif token.lemma_ == "next" and len(doc) <= 2:
                     print("NEXT instruction found")
@@ -149,12 +153,15 @@ def parse(input, userid):
                 response = parse(state.suggestion, userid) # simply call with a suggestion like 'Play rock.'
             else:
                 response = "Oh, ok."
+
+            mpm.speak(response)
         elif states.get(userid).state == ConversationStateEnum.AwaitSongArtistOrGerne:
             print("Song, Gerne or Artist")
             states.pop(userid) # remove state
             return parse("Play " + str(doc), userid)
     except Exception as e: # specify Exception
         response = verbalizer.getConnectionError()
+        mpm.speak(response)
         raise e
 
     return ">>" + response + "\n"
@@ -190,36 +197,50 @@ def play(doc, userid):
 
     print(arg_gernes)
 
-    if len(arguments) == 0:
+    if len(arguments) == 0: # Simple 'Play.' instruction
+        mpm.speak(response)
         mpm.playOrResume()
-    elif len(arg_gernes) < len(arguments) and mpm.containsSongOrArtist(arguments):
+    elif len(arg_gernes) < len(arguments) and mpm.containsSongOrArtist(arguments): # Prefer song/artist
+        mpm.speak(response)
         mpm.playSongOrArtist(arguments)
-    elif len(arg_gernes) > 0:
+    elif len(arg_gernes) > 0: # no songs/artist found, play gerne if there are some
+        mpm.speak(response)
         mpm.playGernes(arg_gernes)
     else:
-        # no gerne song artist found, check for alternate suggestions
+        # no gerne, song or artist found, check for alternate suggestions
         # TODO: suggest a song / gerne / artist depending
         suggestion = mpm.gernes[randint(0, len(mpm.gernes)-1)]
         states[userid] = ConversationState(ConversationStateEnum.AwaitYesOrNo, "Play " + suggestion + ".")
         response = verbalizer.getAlternatePlaySuggestion(suggestion)
+        mpm.speak(response)
     return response
 
 def stop():
+    response = verbalizer.getOkText()
+    mpm.speak(response)
     mpm.stop() # TODO: check response
-    return verbalizer.getOkText()
+    return response
 
 def pause():
+    response = verbalizer.getOkText()
+    mpm.speak(response)
     mpm.pause() # TODO: check response
-    return verbalizer.getOkText()
+    return response
 
 def resume():
+    response = verbalizer.getOkText()
+    mpm.speak(response)
     mpm.resume() # TODO: check response
-    return verbalizer.getOkText()
+    return response
 
 def playNext():
+    response = verbalizer.getOkText()
+    mpm.speak(response)
     mpm.playNext() # TODO: check response
-    return verbalizer.getOkText()
+    return response
 
 def playRandom():
+    response = verbalizer.getOkText()
+    mpm.speak(response)
     mpm.playRandom() # TODO: check response
-    return verbalizer.getOkText()
+    return response
