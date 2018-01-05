@@ -99,6 +99,8 @@ def parse(input, userid):
                     if is_negative(token) != True:
                         if token.nbor().lemma_ == "next":
                             response = playNext()
+                        elif token.nbor().lemma_ == "previous":
+                            response = playPrevious()
                         elif token.nbor().lemma_ == "random":
                             response = playRandom()
                         elif token.nbor().lemma_ == "a" and token.nbor().nbor().lemma_ == "random":
@@ -144,6 +146,28 @@ def parse(input, userid):
                 elif token.lemma_ == "next" and len(doc) <= 2:
                     print("NEXT instruction found")
                     response = playNext()
+                    break
+                elif token.lemma_ == "previous" and len(doc) <= 2:
+                    print("PREVIOUS instruction found")
+                    response = playPrevious()
+                    break
+                elif token.lemma_ == "clear":
+                    print("CLEAR instruction found")
+                    if is_negative(token) != True and 'playlist' in (str(word).lower() for word in doc):
+                        response = clearCurrentPlaylist()
+                    break
+                elif token.lemma_ == "update":
+                    print("UPDATE instruction found")
+                    if is_negative(token) != True and 'database' in (str(word).lower() for word in doc):
+                        response = updateDatabase()
+                    break
+                elif token.lemma_ == "repeat":
+                    print("REPEAT instruction found")
+                    if is_negative(token) != True:
+                        if 'playlist' in (str(word).lower() for word in doc):
+                            response = repeatPlaylist()
+                        elif 'song' in (str(word).lower() for word in doc):
+                            response = repeatSong()
                     break
 
         elif states.get(userid).state == ConversationStateEnum.AwaitYesOrNo:
@@ -239,8 +263,38 @@ def playNext():
     mpm.playNext() # TODO: check response
     return response
 
+def playPrevious():
+    response = verbalizer.getOkText()
+    mpm.speak(response)
+    mpm.playPrevious() # TODO: check response
+    return response
+
 def playRandom():
     response = verbalizer.getOkText()
     mpm.speak(response)
     mpm.playRandom() # TODO: check response
+    return response
+
+def clearCurrentPlaylist():
+    response = verbalizer.getOkText()
+    mpm.speak(response)
+    mpm.clearCurrentPlaylist() # TODO: check response
+    return response
+
+def updateDatabase():
+    response = verbalizer.getOkText()
+    mpm.speak(response)
+    mpm.updateDatabase() # TODO: check response
+    return response
+
+def repeatSong():
+    response = verbalizer.getOkText()
+    mpm.speak(response)
+    mpm.repeatSong() # TODO: check response
+    return response
+
+def repeatPlaylist():
+    response = verbalizer.getOkText()
+    mpm.speak(response)
+    mpm.repeatPlaylist() # TODO: check response
     return response

@@ -58,8 +58,12 @@ Play something.
 Play next.
 Next.
 Play rock music like Heroes from David Bowie.
+Play previous song.
+Previous.
+Clear current playlist.
+Repeat playlist.
+Repeat song.
 ```
-
 ### Not working
 ```
 Playing David Bowie would be terrible.

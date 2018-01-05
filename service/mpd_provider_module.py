@@ -77,6 +77,30 @@ def playRandom():
 def playNext():
     print(colored("RESULT: playNext()", color))
 
+# TODO: @bierschi: Move to MPD-Command
+def playPrevious():
+    print(colored("RESULT: playPrevious()", color))
+
+# TODO: @bierschi: Move to MPD-Command
+def clearCurrentPlaylist():
+    print(colored("RESULT: clearCurrentPlaylist()", color))
+
+# TODO: @bierschi: Move to MPD-Command
+def playPreviousSong():
+    print(colored("RESULT: playPreviousSong()", color))
+
+# TODO: @bierschi: Move to MPD-Command
+def repeatPlaylist():
+    print(colored("RESULT: repeatPlaylist()", color))
+
+# TODO: @bierschi: Move to MPD-Command
+def repeatSong():
+    print(colored("RESULT: repeatSong()", color))
+
+# TODO: @bierschi: Move to MPD-Command
+def updateDatabase():
+    print(colored("RESULT: updateDatabase()", color))
+
 def speak(message):
     ## BING_KEY not known
     # tts = TextToSpeech(bing_key=BING_KEY, language='united_states', gender='Female')
