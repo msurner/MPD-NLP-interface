@@ -35,9 +35,10 @@ def isGerne(gerne):
         return True;
     return False;
 
+# TODO: @bierschi: Move to MPD-Command
 def getRandomGerne():
     gernes = ["rock", "hard rock", "alternative", "electro house"]
-    return mpm.gernes[randint(0, len(mpm.gernes)-1)]
+    return gernes[randint(0, len(gernes)-1)]
 
 # TODO: @bierschi: Move to MPD-Command
 # gernes is a list of gernes f. e. ['rock', 'electro house'] or ['rock']
