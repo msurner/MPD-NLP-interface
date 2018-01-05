@@ -63,6 +63,7 @@ Previous.
 Clear current playlist.
 Repeat playlist.
 Repeat song.
+Update Database.
 ```
 ### Not working
 ```
