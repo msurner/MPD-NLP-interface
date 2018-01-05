@@ -209,7 +209,7 @@ def play(doc, userid):
     else:
         # no gerne, song or artist found, check for alternate suggestions
         # TODO: suggest a song / gerne / artist depending
-        suggestion = mpm.gernes[randint(0, len(mpm.gernes)-1)]
+        suggestion = mpm.getRandomGerne()
         states[userid] = ConversationState(ConversationStateEnum.AwaitYesOrNo, "Play " + suggestion + ".")
         response = verbalizer.getAlternatePlaySuggestion(suggestion)
         mpm.speak(response)
