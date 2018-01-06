@@ -60,6 +60,8 @@ Next.
 Play rock music like Heroes from David Bowie.
 Play previous song.
 Previous.
+Previous song.
+Next song.
 Clear current playlist.
 Repeat playlist.
 Repeat song.

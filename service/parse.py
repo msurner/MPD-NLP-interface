@@ -143,11 +143,11 @@ def parse(input, userid):
                         response = verbalizer.getDontResumeText()
                         mpm.speak(response)
                     break
-                elif token.lemma_ == "next" and len(doc) <= 2:
+                elif token.lemma_ == "next" and len(doc) <= 3:
                     print("NEXT instruction found")
                     response = playNext()
                     break
-                elif token.lemma_ == "previous" and len(doc) <= 2:
+                elif token.lemma_ == "previous" and len(doc) <= 3:
                     print("PREVIOUS instruction found")
                     response = playPrevious()
                     break
