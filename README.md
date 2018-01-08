@@ -19,6 +19,10 @@ or fetch the submodule afterwards with:
 git submodule update --recursive --init
 ```
 
+Install pyhton:
+```
+sudo apt install python3 python3-pip
+```
 Install dependencies:
 ```
 pip3 install flask
@@ -28,7 +32,7 @@ pip3 install python-mpd2
 ```
 Download model:
 ```
-python -m spacy download en_core_web_lg
+python3 -m spacy download en_core_web_lg
 ```
 
 ## Supported instructions
