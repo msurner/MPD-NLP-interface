@@ -5,4 +5,4 @@ if [ $# -eq 0 ]
     exit
 fi
 
-FLASK_APP=$1 flask run
+FLASK_APP=$1 python3 -m flask run
