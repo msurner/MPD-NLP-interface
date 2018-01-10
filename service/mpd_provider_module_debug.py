@@ -3,8 +3,11 @@ from speech_processing.music_player.mpd_connection import ControlMPD
 from response import Response, ErrorCodeEnum
 from random import randint
 
+# use this module to test parse.py without MPD-server
+
 color = "green"
 
+# This simulates the MPD-database
 genres = ["rock", "hard rock", "alternative", "electro house"]
 songs = [ "heroes" ]
 artists = [ "david bowie", "five finger death punch"]

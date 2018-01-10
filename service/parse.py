@@ -1,7 +1,4 @@
 """
-Autor: Martin Surner
-License: MIT
-
 This script tries to parse instructions like following:
 
 Play.
@@ -15,14 +12,27 @@ Play not David Bowie, but Iron Maiden.
 Don't play David Bowie.
 Playing David Bowie would be nice.
 My grandmother wants me to play David Bowie.
-Playing David Bowie would be terrible.
 Don't stop.
 Don't pause.
 Resume.
 Don't resume.
-Play rock.
-Play rock music.
-
+Play rock music or electro house.
+Continue.
+Stop playing
+Play a random song.
+Play random song.
+Play something.
+Play next.
+Next.
+Play rock music like Heroes from David Bowie.
+Play previous song.
+Previous.
+Previous song.
+Next song.
+Clear current playlist.
+Repeat playlist.
+Repeat song.
+Update Database.
 
 ===================
 || Conversations ||
@@ -48,8 +58,7 @@ Play rock music.
 >> Ok. Have fun!
 ------------------------------
 
-TODO:
-Play very very hard rock.
+For more instruction see the README.md file!
 
 """
 import spacy
@@ -182,7 +191,7 @@ def parse(input, userid):
                             response = repeatSong()
                     break
 
-        # Await yes or no, since a question was asked 
+        # Await yes or no, since a question was asked
         elif states.get(userid).state == ConversationStateEnum.AwaitYesOrNo:
             log.info("Yes or no")
             state = states.pop(userid) # remove state
