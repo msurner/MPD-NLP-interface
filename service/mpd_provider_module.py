@@ -10,8 +10,7 @@ color = "green"
 # connect to server
 mpdcontrol = ControlMPD("127.0.0.1", 6600)
 
-
-
+# fetch bing-key
 with open('config.json') as json_file:
             json_data = json.load(json_file)
 
