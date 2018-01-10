@@ -7,7 +7,16 @@ from time import sleep
 
 color = "green"
 
+# connect to server
 mpdcontrol = ControlMPD("127.0.0.1", 6600)
+
+
+
+with open('config.json') as json_file:
+            json_data = json.load(json_file)
+
+        BING_KEY = json_data.get('Bing_Key')
+
 
 def trimGenre(genre):
     # cut ' music' in the end
@@ -97,10 +106,8 @@ def updateDatabase():
     mpdcontrol.update_database()
 
 def speak(message):
-    ## BING_KEY not known
-    is_playing = True;
-    if(not is_playing):
-        tts = TextToSpeech(bing_key="1f02ecb0273049abb906131362d91950", language='united_states', gender='Female')
+    if(not mpdcontrol.is_playing()):
+        tts = TextToSpeech(bing_key=BING_KEY, language='united_states', gender='Female')
         resp = tts.request_to_bing(text=message)
         tts.play_request(resp)
         print(colored("SPOKEN_Output: '" + message + "'", "red"))
