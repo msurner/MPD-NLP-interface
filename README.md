@@ -86,6 +86,8 @@ Shut down.
 ```
 
 ### Conversations
+Conversations are possible, since there is an internal state for each user.
+The state expires after a specified duration f.e. 10 seconds.
 ```
 "Play Oompa Loompa music."
 >> Hmm.. I didn't get that. Should i play rock?
@@ -110,6 +112,19 @@ Shut down.
 "random song"
 >> Ok. Have fun!
 ```
+
+### Users
+This service provides support for more then one client. A user is simply specified by its given `userid` parameter.
+
+### Stress test
+You can do a stress test based on locust with following commands:
+```
+pip3 install locustio
+locust -f locust/locustfile.py
+```
+Feel free to specify some test cases in the locustfile.py!
+In my tests, the service performs pretty well.
+
 
 ## Ideas
 ### Sentiment analysis

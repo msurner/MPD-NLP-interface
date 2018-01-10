@@ -99,6 +99,8 @@ def parse(input, userid):
 
     try:
         if states.get(userid) == None:
+
+            # search for keywords like play, stop, pause, etc..
             for token in doc:
                 if token.lemma_ == "play":
                     log.info("PLAY instruction found")
@@ -125,6 +127,7 @@ def parse(input, userid):
                     break
                 elif token.lemma_ == "stop":
                     log.info("STOP instruction found")
+                    # check if there is a negation
                     if is_negative(token) != True:
                         response = stop()
                     else:
@@ -134,6 +137,7 @@ def parse(input, userid):
                     break
                 elif token.lemma_ == "pause":
                     log.info("PAUSE instruction found")
+                    # check if there is a negation
                     if is_negative(token) != True:
                         response = pause()
                     else:
@@ -143,6 +147,7 @@ def parse(input, userid):
                     break
                 elif token.lemma_ == "resume" or token.lemma_ == "continue":
                     log.info("RESUME instruction found")
+                    # check if there is a negation
                     if is_negative(token) != True:
                         response = resume()
                     else:
@@ -177,6 +182,7 @@ def parse(input, userid):
                             response = repeatSong()
                     break
 
+        # Await yes or no, since a question was asked 
         elif states.get(userid).state == ConversationStateEnum.AwaitYesOrNo:
             log.info("Yes or no")
             state = states.pop(userid) # remove state
