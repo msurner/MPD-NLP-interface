@@ -2,13 +2,18 @@ from termcolor import colored
 from speech_processing.music_player.mpd_connection import ControlMPD
 from response import Response, ErrorCodeEnum
 from random import randint
-from time import sleep
 
 color = "green"
 
+gernes = ["rock", "hard rock", "alternative", "electro house"]
+songs = [ "heroes" ]
+artists = [ "david bowie", "five finger death punch"]
+
+# not working for now - ConnectionRefusedError: [Errno 111] Connection refused
 mpdcontrol = ControlMPD("127.0.0.1",6600)
 
 def trimGerne(gerne):
+    print("trimgerne " + gerne)
     # cut ' music' in the end
     music = "music"
     if gerne.lower().endswith(music):
@@ -17,82 +22,84 @@ def trimGerne(gerne):
 
 def containsSongOrArtist(arguments):
     for argument in arguments:
-        if mpdcontrol.is_artist_in_db(argument) or mpdcontrol.is_title_in_db(argument):
+        if isArtist(argument) or isSong(argument):
             return True
     return False
 
 def playSongOrArtist(arguments):
     print(colored("RESULT: playSongOrArtist(" + ", ".join(arguments) + ")", color))
-    for i in arguments:
-        song_pos = mpdcontrol.add_artist_to_pl(i)
-        mpdcontrol.play(song_pos)
-        print(mpdcontrol.get_current_song_playlist())
-        sleep(10)
 
+# TODO: @bierschi: Move to MPD-Command
 def isGerne(gerne):
-    gerne = trimGerne(gerne).lower()
-    if mpdcontrol.is_genre_in_db(gerne):
-        return True
-    else:
-        return False
+    if trimGerne(gerne).lower() in gernes:
+        return True;
+    return False;
 
 # TODO: @bierschi: Move to MPD-Command
 def getRandomGerne():
     gernes = ["rock", "hard rock", "alternative", "electro house"]
     return gernes[randint(0, len(gernes)-1)]
 
+# TODO: @bierschi: Move to MPD-Command
 # gernes is a list of gernes f. e. ['rock', 'electro house'] or ['rock']
 def playGernes(gernes):
     print(colored("RESULT: playGernes(" + ", ".join(gernes) + ")", color))
-    for i in gernes:
-        song_pos = mpdcontrol.add_genre_to_pl(i)
-        mpdcontrol.play(song_pos)
-        print(mpdcontrol.get_current_song_playlist())
-        sleep(10)
 
+# TODO: @bierschi: Move to MPD-Command
+def isArtist(argument):
+    return argument.lower() in artists
+
+# TODO: @bierschi: Move to MPD-Command
+def isSong(argument):
+    return argument.lower() in songs
+
+# TODO: @bierschi: Move to MPD-Command
 def stop():
     print(colored("RESULT: stop()", color))
-    mpdcontrol.stop()
 
+# TODO: @bierschi: Move to MPD-Command
 def pause():
     print(colored("RESULT: pause()", color))
-    mpdcontrol.pause()
 
+# TODO: @bierschi: Move to MPD-Command
 def resume():
     print(colored("RESULT: resume()", color))
-    mpdcontrol.play()
 
+# TODO: @bierschi: Move to MPD-Command
 def playOrResume():
     print(colored("RESULT: playOrResume()", color))
 
+# TODO: @bierschi: Move to MPD-Command
 def playRandom():
     print(colored("RESULT: playRandom()", color))
-    mpdcontrol.shuffle()
-    mpdcontrol.set_random()
-    mpdcontrol.play()
 
+# TODO: @bierschi: Move to MPD-Command
 def playNext():
     print(colored("RESULT: playNext()", color))
-    mpdcontrol.next()
 
+# TODO: @bierschi: Move to MPD-Command
 def playPrevious():
     print(colored("RESULT: playPrevious()", color))
-    mpdcontrol.previous()
 
+# TODO: @bierschi: Move to MPD-Command
 def clearCurrentPlaylist():
     print(colored("RESULT: clearCurrentPlaylist()", color))
-    mpdcontrol.clear_current_playlist()
 
+# TODO: @bierschi: Move to MPD-Command
+def playPreviousSong():
+    print(colored("RESULT: playPreviousSong()", color))
+
+# TODO: @bierschi: Move to MPD-Command
 def repeatPlaylist():
     print(colored("RESULT: repeatPlaylist()", color))
-    mpdcontrol.set_repeat()
 
+# TODO: @bierschi: Move to MPD-Command
 def repeatSong():
     print(colored("RESULT: repeatSong()", color))
 
+# TODO: @bierschi: Move to MPD-Command
 def updateDatabase():
     print(colored("RESULT: updateDatabase()", color))
-    mpdcontrol.update_database()
 
 def speak(message):
     ## BING_KEY not known
