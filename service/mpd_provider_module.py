@@ -1,12 +1,13 @@
 from termcolor import colored
 from speech_processing.music_player.mpd_connection import ControlMPD
+from speech_processing.speech_control.text_to_speech import TextToSpeech
 from response import Response, ErrorCodeEnum
 from random import randint
 from time import sleep
 
 color = "green"
 
-mpdcontrol = ControlMPD("127.0.0.1",6600)
+mpdcontrol = ControlMPD("127.0.0.1", 6600)
 
 def trimGerne(gerne):
     # cut ' music' in the end
@@ -64,6 +65,7 @@ def resume():
 
 def playOrResume():
     print(colored("RESULT: playOrResume()", color))
+    mpdcontrol.play()
 
 def playRandom():
     print(colored("RESULT: playRandom()", color))
@@ -96,7 +98,9 @@ def updateDatabase():
 
 def speak(message):
     ## BING_KEY not known
-    # tts = TextToSpeech(bing_key=BING_KEY, language='united_states', gender='Female')
-    # resp = tts.request_to_bing(text=message)
-    # tts.play_request(resp)
-    print(colored("SPOKEN_Output: '" + message + "'", "red"))
+    is_playing = True;
+    if(not is_playing):
+        tts = TextToSpeech(bing_key="1f02ecb0273049abb906131362d91950", language='united_states', gender='Female')
+        resp = tts.request_to_bing(text=message)
+        tts.play_request(resp)
+        print(colored("SPOKEN_Output: '" + message + "'", "red"))
