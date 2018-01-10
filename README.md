@@ -1,12 +1,22 @@
 # MPD-NLP-interface
-This implements a natural language user interface for MPD (Music Player Deamon). It provides a restful webservice via flask and expects a string.
+This implements a natural language user interface for MPD (Music Player Deamon). It provides a restful webservice via flask which expects a instruction as string and a userid.
 To run the webservice type:
 ```
-./startServer.sh ../path/to/parse.py
+./flask/startServer.sh ./service/parse.py
 ```
-To run a request type
+To run a request type:
 ```
-./sendRequest.sh "Play David Bowie."
+./flask/sendRequest.sh "Play David Bowie."
+```
+
+## Structure
+
+```
+/flask          -> scripts to start server or send requests
+/service        -> provides actual service content where instructions are parsed and MPD-commands are used
+/locust         -> stress tests
+/spacy_analysis -> some scripts to explore spacy-features and testing how to parse new instructions
+
 ```
 
 ## Getting started
@@ -19,7 +29,7 @@ or fetch the submodule afterwards with:
 git submodule update --recursive --init
 ```
 
-Install pyhton:
+Install python:
 ```
 sudo apt install python3 python3-pip
 ```
@@ -113,10 +123,10 @@ The state expires after a specified duration f.e. 10 seconds.
 >> Ok. Have fun!
 ```
 
-### Users
+## Users
 This service provides support for more then one client. A user is simply specified by its given `userid` parameter.
 
-### Stress test
+## Stress test
 You can do a stress test based on locust with following commands:
 ```
 pip3 install locustio
