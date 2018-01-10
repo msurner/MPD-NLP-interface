@@ -132,6 +132,8 @@ You can do a stress test based on locust with following commands:
 pip3 install locustio
 locust -f locust/locustfile.py
 ```
+Navigate to <http://127.0.0.1:8089> specify number of users, hatchrate and start.
+
 Feel free to specify some test cases in the locustfile.py!
 In my tests, the service performs pretty well.
 
