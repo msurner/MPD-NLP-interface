@@ -9,12 +9,12 @@ color = "green"
 
 mpdcontrol = ControlMPD("127.0.0.1", 6600)
 
-def trimGerne(gerne):
+def trimGenre(genre):
     # cut ' music' in the end
     music = "music"
-    if gerne.lower().endswith(music):
-        gerne = gerne[:len(gerne)-(len(music)+1)]
-    return gerne
+    if genre.lower().endswith(music):
+        genre = genre[:len(genre)-(len(music)+1)]
+    return genre
 
 def containsSongOrArtist(arguments):
     for argument in arguments:
@@ -30,22 +30,22 @@ def playSongOrArtist(arguments):
         print(mpdcontrol.get_current_song_playlist())
         sleep(10)
 
-def isGerne(gerne):
-    gerne = trimGerne(gerne).lower()
-    if mpdcontrol.is_genre_in_db(gerne):
+def isGenre(genre):
+    genre = trimGenre(genre).lower()
+    if mpdcontrol.is_genre_in_db(genre):
         return True
     else:
         return False
 
 # TODO: @bierschi: Move to MPD-Command
-def getRandomGerne():
-    gernes = ["rock", "hard rock", "alternative", "electro house"]
-    return gernes[randint(0, len(gernes)-1)]
+def getRandomGenre():
+    genres = ["rock", "hard rock", "alternative", "electro house"]
+    return genres[randint(0, len(genres)-1)]
 
-# gernes is a list of gernes f. e. ['rock', 'electro house'] or ['rock']
-def playGernes(gernes):
-    print(colored("RESULT: playGernes(" + ", ".join(gernes) + ")", color))
-    for i in gernes:
+# genres is a list of genres f. e. ['rock', 'electro house'] or ['rock']
+def playGenres(genres):
+    print(colored("RESULT: playGenres(" + ", ".join(genres) + ")", color))
+    for i in genres:
         song_pos = mpdcontrol.add_genre_to_pl(i)
         mpdcontrol.play(song_pos)
         print(mpdcontrol.get_current_song_playlist())

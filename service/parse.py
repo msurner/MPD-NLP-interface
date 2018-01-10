@@ -38,12 +38,12 @@ Play rock music.
 >> Oh, ok.
 ------------------------------
 "Play something."
->> Tell me an artist, song or gerne. Or do you want me to play a random song?
+>> Tell me an artist, song or genre. Or do you want me to play a random song?
 "David Bowie"
 >> Ok. Have fun!
 ------------------------------
 "Play something."
->> Tell me an artist, song or gerne. Or do you want me to play a random song?
+>> Tell me an artist, song or genre. Or do you want me to play a random song?
 "random song"
 >> Ok. Have fun!
 ------------------------------
@@ -54,13 +54,14 @@ Play very very hard rock.
 """
 import spacy
 from termcolor import colored
-import mpd_provider_module as mpm
+import mpd_provider_module_debug as mpm
 import verbalizer
 from enum import Enum
 from expiringdict import ExpiringDict
 from conversationState import ConversationStateEnum, ConversationState
 from response import Response, ErrorCodeEnum
 from random import randint
+import logging as log
 from flask import Flask, request
 app = Flask(__name__)
 
@@ -71,7 +72,13 @@ nlp = spacy.load("en_core_web_lg")
 # note that there an additional state which is also the initial state which is considered if no state is stored
 
 states = ExpiringDict(max_len=100, max_age_seconds=10)
-# states[userid] = ConversationState(ConversationStateEnum.AwaitYesOrNo, "Ask for David Bowie?")
+verbose = True
+
+if verbose:
+    log.basicConfig(format="%(levelname)s: %(message)s", level=log.DEBUG)
+    log.info("Verbose output.")
+else:
+    log.basicConfig(format="%(levelname)s: %(message)s")
 
 
 print("READY for requests")
@@ -80,21 +87,21 @@ print("READY for requests")
 def parseREST():
     input = request.args.get('input')
     userid = request.args.get('userid')
-    print("REQUEST from id " + userid + ": " + input)
+    log.info("REQUEST from id " + userid + ": " + input)
     return parse(input, userid)
 
 
 def parse(input, userid):
-    #start with part of speech tagging
+    # start with part of speech tagging
     doc = nlp(input)
 
-    response = "initial value aka no instruction found."
+    response = ""
 
     try:
         if states.get(userid) == None:
             for token in doc:
                 if token.lemma_ == "play":
-                    print("PLAY instruction found")
+                    log.info("PLAY instruction found")
                     # check if there is a negation
                     if is_negative(token) != True:
                         if token.nbor().lemma_ == "next":
@@ -106,9 +113,9 @@ def parse(input, userid):
                         elif len(doc) > 2 and token.nbor().lemma_ == "a" and token.nbor().nbor().lemma_ == "random":
                             response = playRandom()
                         elif len(doc) > 1 and token.nbor().lemma_ == "something":
-                            # ask for a artist/songname or gerne
-                            states[userid] = ConversationState(ConversationStateEnum.AwaitSongArtistOrGerne)
-                            return verbalizer.getQuestionForArtistSongGerneOrRandom()
+                            # ask for a artist/songname or genre
+                            states[userid] = ConversationState(ConversationStateEnum.AwaitSongArtistOrGenre)
+                            return verbalizer.getQuestionForArtistSongGenreOrRandom()
                         else:
                             response = play(doc, userid)
                     else:
@@ -117,7 +124,7 @@ def parse(input, userid):
                         mpm.speak(response)
                     break
                 elif token.lemma_ == "stop":
-                    print("STOP instruction found")
+                    log.info("STOP instruction found")
                     if is_negative(token) != True:
                         response = stop()
                     else:
@@ -126,7 +133,7 @@ def parse(input, userid):
                         mpm.speak(response)
                     break
                 elif token.lemma_ == "pause":
-                    print("PAUSE instruction found")
+                    log.info("PAUSE instruction found")
                     if is_negative(token) != True:
                         response = pause()
                     else:
@@ -135,7 +142,7 @@ def parse(input, userid):
                         mpm.speak(response)
                     break
                 elif token.lemma_ == "resume" or token.lemma_ == "continue":
-                    print("RESUME instruction found")
+                    log.info("RESUME instruction found")
                     if is_negative(token) != True:
                         response = resume()
                     else:
@@ -144,25 +151,25 @@ def parse(input, userid):
                         mpm.speak(response)
                     break
                 elif token.lemma_ == "next" and len(doc) <= 3:
-                    print("NEXT instruction found")
+                    log.info("NEXT instruction found")
                     response = playNext()
                     break
                 elif token.lemma_ == "previous" and len(doc) <= 3:
-                    print("PREVIOUS instruction found")
+                    log.info("PREVIOUS instruction found")
                     response = playPrevious()
                     break
                 elif token.lemma_ == "clear":
-                    print("CLEAR instruction found")
+                    log.info("CLEAR instruction found")
                     if is_negative(token) != True and 'playlist' in (str(word).lower() for word in doc):
                         response = clearCurrentPlaylist()
                     break
                 elif token.lemma_ == "update":
-                    print("UPDATE instruction found")
+                    log.info("UPDATE instruction found")
                     if is_negative(token) != True and 'database' in (str(word).lower() for word in doc):
                         response = updateDatabase()
                     break
                 elif token.lemma_ == "repeat":
-                    print("REPEAT instruction found")
+                    log.info("REPEAT instruction found")
                     if is_negative(token) != True:
                         if 'playlist' in (str(word).lower() for word in doc):
                             response = repeatPlaylist()
@@ -171,7 +178,7 @@ def parse(input, userid):
                     break
 
         elif states.get(userid).state == ConversationStateEnum.AwaitYesOrNo:
-            print("Yes or no")
+            log.info("Yes or no")
             state = states.pop(userid) # remove state
             if doc[0].lemma_ == "yes":
                 response = parse(state.suggestion, userid) # simply call with a suggestion like 'Play rock.'
@@ -179,32 +186,38 @@ def parse(input, userid):
                 response = "Oh, ok."
 
             mpm.speak(response)
-        elif states.get(userid).state == ConversationStateEnum.AwaitSongArtistOrGerne:
-            print("Song, Gerne or Artist")
+        elif states.get(userid).state == ConversationStateEnum.AwaitSongArtistOrGenre:
+            log.info("Song, Genre or Artist")
             states.pop(userid) # remove state
             return parse("Play " + str(doc), userid)
-    except Exception as e: # specify Exception
+    except Exception as e:
         response = verbalizer.getConnectionError()
         mpm.speak(response)
         raise e
 
-    return ">>" + response + "\n"
+    # no keyword was found
+    if response == "":
+        suggestion = mpm.getRandomGenre()
+        states[userid] = ConversationState(ConversationStateEnum.AwaitYesOrNo, "Play " + suggestion + ".")
+        response = verbalizer.getAlternatePlaySuggestion(suggestion)
+        mpm.speak(response)
+
+    return response
 
 def is_negative(token):
     # if there is a negation for play, it is a children of play in the graph
     for child in token.children:
-        #print(child.text + " " + child.dep_)
         if child.dep_ == "neg":
-            print("NEG found")
+            log.info("NEG found")
             return True
     return False
 
 def play(doc, userid):
     chunks = list(doc.noun_chunks)
-    # determine if this chunks are gernes, artists or songs
-    # for gerne:
-    # should be only one chunk with one word or <GERNE> + music
-    print("CHUNKS: " + str(chunks))
+    # determine if this chunks are genres, artists or songs
+    # for genre:
+    # should be only one chunk with one word or <GENRE> + music
+    log.info("CHUNKS: " + str(chunks))
 
     arguments = []
     for chunk in chunks:
@@ -213,27 +226,27 @@ def play(doc, userid):
     response = verbalizer.getOkText()
 
 
-    arg_gernes = []
+    arg_genres = []
     for chunk in arguments:
-        gerne = mpm.trimGerne(chunk)
-        if mpm.isGerne(gerne) == True:
-            arg_gernes.append(gerne)
+        genre = mpm.trimGenre(chunk)
+        if mpm.isGenre(genre) == True:
+            arg_genres.append(genre)
 
-    print(arg_gernes)
+    log.info(arg_genres)
 
     if len(arguments) == 0: # Simple 'Play.' instruction
         mpm.speak(response)
         mpm.playOrResume()
-    elif len(arg_gernes) < len(arguments) and mpm.containsSongOrArtist(arguments): # Prefer song/artist
+    elif len(arg_genres) < len(arguments) and mpm.containsSongOrArtist(arguments): # Prefer song/artist
         mpm.speak(response)
         mpm.playSongOrArtist(arguments)
-    elif len(arg_gernes) > 0: # no songs/artist found, play gerne if there are some
+    elif len(arg_genres) > 0: # no songs/artist found, play genre if there are some
         mpm.speak(response)
-        mpm.playGernes(arg_gernes)
+        mpm.playGenres(arg_genres)
     else:
-        # no gerne, song or artist found, check for alternate suggestions
-        # TODO: suggest a song / gerne / artist depending
-        suggestion = mpm.getRandomGerne()
+        # no genre, song or artist found, check for alternate suggestions
+        # suggest a random genre
+        suggestion = mpm.getRandomGenre()
         states[userid] = ConversationState(ConversationStateEnum.AwaitYesOrNo, "Play " + suggestion + ".")
         response = verbalizer.getAlternatePlaySuggestion(suggestion)
         mpm.speak(response)
