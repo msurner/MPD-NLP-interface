@@ -1,5 +1,5 @@
 # MPD-NLP-interface
-This implements a natural language user interface for MPD (Music Player Deamon). It provides a restful webservice via flask which expects a instruction as string and a userid.
+This implements a natural language user interface for MPD (Music Player Daemon). It provides a restful webservice via flask which expects a instruction as string and a userid.
 To run the webservice type:
 ```
 ./flask/startServer.sh ./service/parse.py

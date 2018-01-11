@@ -92,13 +92,12 @@ else:
 
 print("READY for requests")
 
-@app.route("/")
-def parseREST():
+@app.route("/", methods=['GET', 'POST'])
+def parseService():
     input = request.args.get('input')
     userid = request.args.get('userid')
     log.info("REQUEST from id " + userid + ": " + input)
     return parse(input, userid)
-
 
 def parse(input, userid):
     # start with part of speech tagging
@@ -270,59 +269,59 @@ def play(doc, userid):
 def stop():
     response = verbalizer.getOkText()
     mpm.speak(response)
-    mpm.stop() # TODO: check response
+    mpm.stop()
     return response
 
 def pause():
     response = verbalizer.getOkText()
     mpm.speak(response)
-    mpm.pause() # TODO: check response
+    mpm.pause()
     return response
 
 def resume():
     response = verbalizer.getOkText()
     mpm.speak(response)
-    mpm.resume() # TODO: check response
+    mpm.resume()
     return response
 
 def playNext():
     response = verbalizer.getOkText()
     mpm.speak(response)
-    mpm.playNext() # TODO: check response
+    mpm.playNext()
     return response
 
 def playPrevious():
     response = verbalizer.getOkText()
     mpm.speak(response)
-    mpm.playPrevious() # TODO: check response
+    mpm.playPrevious()
     return response
 
 def playRandom():
     response = verbalizer.getOkText()
     mpm.speak(response)
-    mpm.playRandom() # TODO: check response
+    mpm.playRandom()
     return response
 
 def clearCurrentPlaylist():
     response = verbalizer.getOkText()
     mpm.speak(response)
-    mpm.clearCurrentPlaylist() # TODO: check response
+    mpm.clearCurrentPlaylist()
     return response
 
 def updateDatabase():
     response = verbalizer.getOkText()
     mpm.speak(response)
-    mpm.updateDatabase() # TODO: check response
+    mpm.updateDatabase()
     return response
 
 def repeatSong():
     response = verbalizer.getOkText()
     mpm.speak(response)
-    mpm.repeatSong() # TODO: check response
+    mpm.repeatSong()
     return response
 
 def repeatPlaylist():
     response = verbalizer.getOkText()
     mpm.speak(response)
-    mpm.repeatPlaylist() # TODO: check response
+    mpm.repeatPlaylist()
     return response
