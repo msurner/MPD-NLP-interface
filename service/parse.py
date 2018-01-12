@@ -80,7 +80,7 @@ nlp = spacy.load("en_core_web_lg")
 # conversation state is stored in a expiringdict
 # note that there an additional state which is also the initial state which is considered if no state is stored
 
-states = ExpiringDict(max_len=100, max_age_seconds=10)
+states = ExpiringDict(max_len=100, max_age_seconds=20)
 verbose = True
 
 if verbose:
@@ -125,7 +125,9 @@ def parse(input, userid):
                         elif len(doc) > 1 and token.nbor().lemma_ == "something":
                             # ask for a artist/songname or genre
                             states[userid] = ConversationState(ConversationStateEnum.AwaitSongArtistOrGenre)
-                            return verbalizer.getQuestionForArtistSongGenreOrRandom()
+                            response = verbalizer.getQuestionForArtistSongGenreOrRandom()
+                            mpm.speak(response)
+                            response
                         else:
                             response = play(doc, userid)
                     else:
