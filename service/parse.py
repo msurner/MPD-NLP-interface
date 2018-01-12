@@ -63,7 +63,7 @@ For more instruction see the README.md file!
 """
 import spacy
 from termcolor import colored
-import mpd_provider_module_debug as mpm
+import mpd_provider_module as mpm
 import verbalizer
 from enum import Enum
 from expiringdict import ExpiringDict

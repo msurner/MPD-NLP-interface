@@ -4,6 +4,7 @@ from speech_processing.speech_control.text_to_speech import TextToSpeech
 from response import Response, ErrorCodeEnum
 from random import randint
 from time import sleep
+import json
 
 color = "green"
 
@@ -11,10 +12,9 @@ color = "green"
 mpdcontrol = ControlMPD("127.0.0.1", 6600)
 
 # fetch bing-key
-with open('config.json') as json_file:
-            json_data = json.load(json_file)
-
-        BING_KEY = json_data.get('Bing_Key')
+with open('config/config.json') as json_file:
+    json_data = json.load(json_file)
+    BING_KEY = json_data.get('Bing_Key')
 
 
 def trimGenre(genre):
