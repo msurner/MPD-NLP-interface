@@ -92,12 +92,20 @@ else:
 
 print("READY for requests")
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/", methods=['GET'])
 def parseService():
     input = request.args.get('input')
     userid = request.args.get('userid')
     log.info("REQUEST from id " + userid + ": " + input)
     return parse(input, userid)
+
+# to provide compability for bierschi's speech_processing
+@app.route("/", methods=['POST'])
+def parseREST():
+    bytes_obj = request.get_data()
+    resp_string = bytes_obj.decode('utf-8')
+    userid = 1
+    return parse(resp_string, userid)
 
 def parse(input, userid):
     # start with part of speech tagging
