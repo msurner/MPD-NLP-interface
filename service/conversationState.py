@@ -5,7 +5,7 @@ from enum import Enum
 class ConversationStateEnum(Enum):
     Initial = 0 # only for initialization, same as not existing / expired
     AwaitYesOrNo = 1
-    AwaitSongArtistOrGerne = 2
+    AwaitSongArtistOrGenre = 2
 
 
 class ConversationState:

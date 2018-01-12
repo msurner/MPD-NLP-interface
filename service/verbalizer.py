@@ -24,5 +24,5 @@ def getAlternatePlaySuggestion(argument):
 def getConnectionError():
     return "Unfortunately i can't connect to the MPD Server."
 
-def getQuestionForArtistSongGerneOrRandom():
+def getQuestionForArtistSongGenreOrRandom():
     return "Tell me an artist, song or gerne. Or do you want me to play a random song?"
