@@ -29,9 +29,9 @@ or fetch the submodule afterwards with:
 git submodule update --recursive --init
 ```
 
-Install python:
+Install python and (at least on Ubuntu 17.10) curl:
 ```
-sudo apt install python3 python3-pip
+sudo apt install python3 python3-pip curl
 ```
 Install dependencies:
 ```
