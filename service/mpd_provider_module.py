@@ -105,8 +105,7 @@ def updateDatabase():
     mpdcontrol.update_database()
 
 def speak(message):
-    if(not mpdcontrol.is_playing()):
-        tts = TextToSpeech(bing_key=BING_KEY, language='united_states', gender='Female')
-        resp = tts.request_to_bing(text=message)
-        tts.play_request(resp)
-        print(colored("SPOKEN_Output: '" + message + "'", "red"))
+    tts = TextToSpeech(bing_key=BING_KEY, language='united_states', gender='Female')
+    resp = tts.request_to_bing(text=message)
+    tts.play_request(resp)
+    print(colored("SPOKEN_Output: '" + message + "'", "red"))
