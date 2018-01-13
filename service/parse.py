@@ -63,7 +63,7 @@ For more instruction see the README.md file!
 """
 import spacy
 from termcolor import colored
-import mpd_provider_module as mpm
+import mpd_provider_module_debug as mpm
 import verbalizer
 from enum import Enum
 from expiringdict import ExpiringDict
@@ -246,6 +246,11 @@ def play(doc, userid):
     arguments = []
     for chunk in chunks:
         arguments.append(str(chunk))
+
+    # in some cases chunk analysis takes play within the chunk
+    if arguments[0].lower().startswith("play") and doc.text.lower().count("play") == arguments[0].lower().count("play"):
+        arguments[0] = arguments[0][5:]
+        print("removed play")
 
     response = verbalizer.getOkText()
 
