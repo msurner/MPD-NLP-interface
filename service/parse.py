@@ -251,15 +251,17 @@ def play(doc, userid):
     # in some cases chunk analysis takes play within the chunk
     if len(arguments) > 0 and arguments[0].lower().startswith("play") and doc.text.lower().count("play") == arguments[0].lower().count("play"):
         arguments[0] = arguments[0][5:]
-        arguments.remove("")
+        if "" in arguments:
+            arguments.remove("")
 
     # if chunk analysis fails, set chunk manually (this happens in short instructions)
     if len(arguments) == 0:
         table = str.maketrans({key: None for key in string.punctuation})
         arguments.append(doc.text[5:].translate(table))
+        if "" in arguments:
+            arguments.remove("")
 
     response = verbalizer.getOkText()
-
 
     arg_genres = []
     for chunk in arguments:
