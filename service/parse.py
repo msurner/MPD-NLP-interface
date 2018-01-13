@@ -63,7 +63,7 @@ For more instruction see the README.md file!
 """
 import spacy
 from termcolor import colored
-import mpd_provider_module_debug as mpm
+import mpd_provider_module as mpm
 import verbalizer
 from enum import Enum
 from expiringdict import ExpiringDict
@@ -71,6 +71,7 @@ from conversationState import ConversationStateEnum, ConversationState
 from response import Response, ErrorCodeEnum
 from random import randint
 import logging as log
+import string
 from flask import Flask, request
 app = Flask(__name__)
 
@@ -248,9 +249,14 @@ def play(doc, userid):
         arguments.append(str(chunk))
 
     # in some cases chunk analysis takes play within the chunk
-    if arguments[0].lower().startswith("play") and doc.text.lower().count("play") == arguments[0].lower().count("play"):
+    if len(arguments) > 0 and arguments[0].lower().startswith("play") and doc.text.lower().count("play") == arguments[0].lower().count("play"):
         arguments[0] = arguments[0][5:]
         print("removed play")
+
+    # if chunk analysis fails, set chunk manually (this happens in short instructions)
+    if len(arguments) == 0:
+        table = str.maketrans({key: None for key in string.punctuation})
+        arguments.append(doc.text[5:].translate(table))
 
     response = verbalizer.getOkText()
 
