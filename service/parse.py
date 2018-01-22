@@ -63,7 +63,7 @@ For more instruction see the README.md file!
 """
 import spacy
 from termcolor import colored
-import mpd_provider_module as mpm
+import mpd_provider_module as mpm # For debugging you can use mpd_provider_module_debug instead. There is no MPD-connection required, MPD-commands will be visible on console
 import verbalizer
 from enum import Enum
 from expiringdict import ExpiringDict

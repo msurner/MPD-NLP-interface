@@ -12,7 +12,6 @@ genres = ["rock", "hard rock", "alternative", "electro house"]
 songs = [ "heroes" ]
 artists = [ "david bowie", "five finger death punch"]
 
-mpdcontrol = ControlMPD("127.0.0.1",6600)
 
 def trimGenre(genre):
     print("trimgenre " + genre)

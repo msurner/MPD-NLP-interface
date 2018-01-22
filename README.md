@@ -81,19 +81,6 @@ Repeat playlist.
 Repeat song.
 Update Database.
 ```
-### Not working
-```
-Playing David Bowie would be terrible.
-Play rock music or some electro house.
-Play get the funk.
-Play the next song.
-```
-
-
-### Future
-```
-Shut down.
-```
 
 ### Conversations
 Conversations are possible, since there is an internal state for each user.
@@ -126,6 +113,10 @@ The state expires after a specified duration f.e. 10 seconds.
 ## Users
 This service provides support for more then one client. A user is simply specified by its given `userid` parameter.
 
+## Testing
+For testing without a MPD-server, you can import the `mpd_provider_module_debug` instead of `mpd_provider_module`.
+Instead of MPD-instructions, you can see an output on console.
+
 ## Stress test
 You can do a stress test based on locust with following commands:
 ```
@@ -135,7 +126,7 @@ locust -f locust/locustfile.py
 Navigate to <http://127.0.0.1:8089> specify number of users, hatchrate and start.
 
 Feel free to specify some test cases in the locustfile.py!
-In my tests, the service performs pretty well.
+In my tests, the service performs pretty well (on debug mode).
 
 
 ## Ideas
