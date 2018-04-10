@@ -44,6 +44,14 @@ Download model:
 ```
 python3 -m spacy download en_core_web_lg
 ```
+Due to conflicting folder structures you'll have to modify `service/speech_processing/speech_control/text_to_speech.py`: change 
+```
+from resources.supported_languages import TTSLanguageCommand 
+```
+to 
+```
+from ..resources.supported_languages import TTSLanguageCommand
+```
 
 ## Supported instructions
 ### Working
